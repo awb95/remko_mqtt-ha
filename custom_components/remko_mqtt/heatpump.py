@@ -149,10 +149,10 @@ class HeatPump:
             ):
                 self._reg_time[reg_id] = time.time()
                 raw = int(value, 16)
-                self._hpstate[reg_id] = (-(raw & 0x8000) | (raw & 0x7FFF)) / 10
+                self._hpstate[reg_id] = (raw - 0x10000 if raw >= 0x8000 else raw) / 10.0
         elif reg_type == "sensor_temp_inp":
             raw = int(value, 16)
-            self._hpstate[reg_id] = (-(raw & 0x8000) | (raw & 0x7FFF)) / 10
+            self._hpstate[reg_id] = (raw - 0x10000 if raw >= 0x8000 else raw) / 10.0
         elif reg_type == "sensor_mode":
             mode = f"opmode{int(value, 16)}"
             self._hpstate[reg_id] = remko_reg_translation[mode][self._langid]
@@ -340,7 +340,7 @@ class HeatPump:
         if reg_type == "timeprogram":
             return json.dumps({"values": {reg_id: value}})
         if reg_type == "sensor_temp_inp":
-            hex_str = hex(int(value * 10)).upper()[2:].zfill(4)
+            hex_str = f"{int(round(value * 10)) & 0xFFFF:04X}"
             return json.dumps({"values": {reg_id: hex_str}})
 
         if reg_type == "select_input":

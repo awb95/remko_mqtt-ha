@@ -21,7 +21,7 @@ remko_reg = {
     "timeprogram_dhw_c": ["1940", "timeprogram", "", "", "", False],
     "timeprogram_hc_b": ["1941", "timeprogram", "", "", "", False],
     "timeprogram_hc_c": ["1942", "timeprogram", "", "", "", False],
-    "temp_adjust": ["1946", "sensor_temp_inp", "ºC", -5.0, 5.0, True],
+    "temp_adjust": ["1946", "sensor_temp_inp", "ºC", -10.0, 10.0, True],
     "main_mode": ["1951", "select_input", "", "", "", True],
     "heating_circ_mode": ["1972", "switch", "", "", "", False],
     "fixed_temp_req": ["1974", "sensor_temp_inp", "ºC", 20.0, 60.0, False],
