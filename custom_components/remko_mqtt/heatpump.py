@@ -135,7 +135,7 @@ class HeatPump:
             ):
                 self._reg_time[reg_id] = time.time()
                 self._hpstate[reg_id] = int(value, 16) * 100
-        elif reg_type in ("sensor_en", "sensor_counter"):
+        elif reg_type in ("sensor_en", "sensor_counter", "sensor_freq"):
             if (
                 reg_id not in self._reg_time
                 or time.time() - self._reg_time[reg_id] > self._freq

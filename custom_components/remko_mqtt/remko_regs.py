@@ -38,6 +38,7 @@ remko_reg = {
     "energy_thermal": ["5119", "sensor_en", "kWh", "", "", False],
     "buff_temp": ["5131", "sensor_temp", "ºC", "", "", False],
     "heating_actual_temp": ["5190", "sensor_temp", "ºC", "", "", True],
+    "compressor_frequency": ["5205", "sensor_freq", "Hz", "", "", False],
     "power_own_use": ["5231", "sensor_el", "W", "", "", False],
     "el_consumption": ["5320", "sensor_el", "W", "", "", True],
     "th_consumption": ["5321", "sensor_el", "W", "", "", False],
@@ -46,6 +47,7 @@ remko_reg = {
     "energy_environmental": ["5600", "sensor_en", "kWh", "", "", False],
     "dhw_heating": ["5693", "action", "", "", "", True],
     "compressor_starts": ["5822", "sensor_counter", "", 0, 65535, False],
+    "compressor_hours": ["5824", "sensor_counter", "h", 0, "", False],
 }
 
 # Translation dictionary
@@ -55,6 +57,8 @@ remko_reg_translation = {
     "actual_temp": ["Actual temperature", "Ist-Temperatur"],
     "buff_temp": ["Buffer tank temp.", "Pufferspeicher Temp."],
     "circulation_temp": ["Circulation temp.", "Zirkulation Temp."],
+    "compressor_frequency": ["Compressor frequency", "Verdichterfrequenz"],
+    "compressor_hours": ["Compressor hours", "Verdichterstunden"],
     "compressor_starts": ["compressor starts", "Kompressorstarts"],
     "dhw_heating": ["1x DHW heating", "1x WW aufheizen"],
     "dhw_opmode": ["DHW mode", "WW Modus"],
@@ -92,10 +96,12 @@ remko_reg_translation = {
     "dhwopmode1": ["Automatic eco", "Automatik Eco"],
     "dhwopmode2": ["Solar/PV only", "Nur Solar/PV"],
     "dhwopmode3": ["Off", "Aus"],
+    "mode0": ["Unknown", "Unbekannt"],
     "mode1": ["Auto", "Auto"],
     "mode2": ["Heating", "Heizen"],
     "mode3": ["Standby", "Standby"],
     "mode4": ["Cooling", "Kühlen"],
+    "opmode0": ["Unknown / Off", "Unbekannt / Aus"],
     "opmode1": ["Forced off", "Störung"],
     "opmode2": ["Defrosting", "Abtauen"],
     "opmode3": ["Load defr. puffer", "Abtaupuffer"],

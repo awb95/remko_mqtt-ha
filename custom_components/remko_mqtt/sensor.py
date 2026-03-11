@@ -30,6 +30,7 @@ _SENSOR_TYPES = {
     "sensor_counter",
     "sensor_el",
     "sensor_en",
+    "sensor_freq",
     "sensor_input",
     "sensor_mode",
     "sensor_temp",
