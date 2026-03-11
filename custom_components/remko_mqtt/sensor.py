@@ -7,11 +7,9 @@ from homeassistant.components.sensor import SensorEntity, SensorStateClass
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import UnitOfTemperature
 from homeassistant.core import HomeAssistant, callback
-from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.device_registry import DeviceEntryType
 from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers.entity_registry import RegistryEntryDisabler
 
 from .const import DOMAIN, CONF_ID, CONF_NAME, CONF_VER
 from .remko_regs import (
@@ -142,6 +140,9 @@ class HeatPumpSensor(SensorEntity):
             entry_type=DeviceEntryType.SERVICE,
         )
 
+        # Set entity registry enabled default based on active flag
+        self._attr_entity_registry_enabled_default = active
+
         # Register metadata
         self._reg_name = reg_name
         self._reg_id = reg_id
@@ -185,18 +186,6 @@ class HeatPumpSensor(SensorEntity):
             return {"timeprogram": timeprogram}
         return {}
 
-    @staticmethod
-    async def _disable_entity(
-        hass: HomeAssistant, entity_id: str, disabled: bool
-    ) -> None:
-        """Programmatically hide/show entity via registry."""
-        entity_registry = er.async_get(hass)
-        if entry := entity_registry.async_get(entity_id):
-            disabled_by = RegistryEntryDisabler.INTEGRATION if disabled else None
-            entity_registry.async_update_entity(
-                entry.entity_id, disabled_by=disabled_by
-            )
-
     def _configure_sensor_type(self, reg_type: str, reg_unit: str | None) -> None:
         """Configure sensor attributes based on register type."""
         # State class
@@ -227,11 +216,6 @@ class HeatPumpSensor(SensorEntity):
         mqtt_listener = self.hass.bus.async_listen(mqtt_event, _handle_mqtt_event)
         self.async_on_remove(mqtt_listener)
         _LOGGER.debug("MQTT event listener registered for %s", self.entity_id)
-
-        # Disable entity if active=False
-        if not self._active:
-            await self._disable_entity(self.hass, self.entity_id, True)
-            _LOGGER.debug("Disabled entity %s (active=False)", self.entity_id)
 
         # Timeprogram update listener (only for timeprogram sensors)
         if self._reg_type == "timeprogram":

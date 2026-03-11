@@ -1,6 +1,4 @@
 import logging
-from typing import Dict, List, Optional
-import uuid
 
 
 _LOGGER = logging.getLogger(__name__)
@@ -71,7 +69,7 @@ class RemkoTimeProgramConverter:
             return RemkoTimeProgramConverter._create_empty_timeprogram()
 
     @staticmethod
-    def timeprogram_to_hex(timeprogram: dict) -> Optional[str]:
+    def timeprogram_to_hex(timeprogram: dict) -> str | None:
         try:
             if not timeprogram or not isinstance(timeprogram, dict):
                 return None
@@ -126,7 +124,7 @@ class RemkoTimeProgramConverter:
             return None
 
     @staticmethod
-    def _find_timeslots(bit_string: str) -> List[Dict]:
+    def _find_timeslots(bit_string: str) -> list[dict]:
         timeslots = []
         in_timeslot = False
         start_slot = 0

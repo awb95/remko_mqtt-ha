@@ -6,11 +6,9 @@ from typing import Any
 from homeassistant.components.button import ButtonEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.device_registry import DeviceEntryType
 from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers.entity_registry import RegistryEntryDisabler
 
 from .const import DOMAIN, CONF_ID, CONF_NAME, CONF_VER
 from .remko_regs import (
@@ -119,6 +117,9 @@ class HeatPumpButton(ButtonEntity):
         self._reg_name = reg_name
         self._reg_id = reg_id
 
+        # Set entity registry enabled default based on active flag
+        self._attr_entity_registry_enabled_default = active
+
         # Active flag
         self._active = active
 
@@ -130,23 +131,6 @@ class HeatPumpButton(ButtonEntity):
     def device_class(self) -> str:
         """Return the device class of this button."""
         return f"{DOMAIN}_HeatPumpButton"
-
-    @property
-    def entity_registry_enabled_default(self) -> bool:
-        """Hide if active is False."""
-        return self._active
-
-    @staticmethod
-    async def _disable_entity(
-        hass: HomeAssistant, entity_id: str, disabled: bool
-    ) -> None:
-        """Programmatically hide/show entity via registry."""
-        entity_registry = er.async_get(hass)
-        if entry := entity_registry.async_get(entity_id):
-            disabled_by = RegistryEntryDisabler.INTEGRATION if disabled else None
-            entity_registry.async_update_entity(
-                entry.entity_id, disabled_by=disabled_by
-            )
 
     async def async_press(self) -> None:
         """Handle button press by sending action command via MQTT."""

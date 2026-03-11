@@ -7,11 +7,9 @@ from homeassistant.components.number import NumberEntity, NumberMode
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import UnitOfTemperature
 from homeassistant.core import HomeAssistant, callback
-from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.device_registry import DeviceEntryType
 from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers.entity_registry import RegistryEntryDisabler
 
 from .const import DOMAIN, CONF_ID, CONF_NAME, CONF_VER
 from .remko_regs import (
@@ -131,6 +129,9 @@ class HeatPumpNumber(NumberEntity):
         self._reg_name = reg_name
         self._reg_id = reg_id
 
+        # Set entity registry enabled default based on active flag
+        self._attr_entity_registry_enabled_default = active
+
         # Active flag
         self._active = active
 
@@ -159,23 +160,6 @@ class HeatPumpNumber(NumberEntity):
             reg_max,
         )
 
-    @property
-    def entity_registry_enabled_default(self) -> bool:
-        """Hide if active is False."""
-        return self._active
-
-    @staticmethod
-    async def _disable_entity(
-        hass: HomeAssistant, entity_id: str, disabled: bool
-    ) -> None:
-        """Programmatically hide/show entity via registry."""
-        entity_registry = er.async_get(hass)
-        if entry := entity_registry.async_get(entity_id):
-            disabled_by = RegistryEntryDisabler.INTEGRATION if disabled else None
-            entity_registry.async_update_entity(
-                entry.entity_id, disabled_by=disabled_by
-            )
-
     async def async_added_to_hass(self) -> None:
         """Register MQTT event listener when entity is added to Home Assistant."""
 
@@ -188,11 +172,6 @@ class HeatPumpNumber(NumberEntity):
         listener = self.hass.bus.async_listen(mqtt_event, _handle_mqtt_event)
         self.async_on_remove(listener)
         _LOGGER.debug("MQTT event listener registered for %s", self.entity_id)
-
-        # Disable entity if active=False
-        if not self._active:
-            await self._disable_entity(self.hass, self.entity_id, True)
-            _LOGGER.debug("Disabled entity %s (active=False)", self.entity_id)
 
     async def async_update(self) -> None:
         """Fetch latest value from heat pump and update state."""
