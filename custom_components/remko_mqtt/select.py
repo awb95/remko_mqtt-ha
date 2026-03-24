@@ -64,7 +64,7 @@ async def async_setup_entry(
         if reg_name in remko_reg_translation:
             try:
                 friendly_name = remko_reg_translation[reg_name][heatpump._langid]
-            except (IndexError, KeyError):
+            except IndexError, KeyError:
                 _LOGGER.warning(
                     "Could not get translation for %s at language index %s",
                     reg_name,
@@ -102,7 +102,7 @@ def _get_select_options(reg_name: str, langid: int) -> list[str]:
         try:
             option_text = remko_reg_translation[option_key][langid]
             options.append(option_text)
-        except (KeyError, IndexError):
+        except KeyError, IndexError:
             _LOGGER.warning(
                 "Could not get translation for option %s at language index %s",
                 option_key,
@@ -115,7 +115,7 @@ def _get_select_options(reg_name: str, langid: int) -> list[str]:
 class HeatPumpSelect(SelectEntity):
     """Select entity for Remko heat pump option registers."""
 
-    _attr_has_entity_name = True
+    _attr_has_entity_name = False
     _attr_available = True
 
     def __init__(

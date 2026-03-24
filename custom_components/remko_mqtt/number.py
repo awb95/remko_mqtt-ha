@@ -65,7 +65,7 @@ async def async_setup_entry(
         if reg_name in remko_reg_translation:
             try:
                 friendly_name = remko_reg_translation[reg_name][heatpump._langid]
-            except (IndexError, KeyError):
+            except IndexError, KeyError:
                 _LOGGER.warning(
                     "Could not get translation for %s at language index %s",
                     reg_name,
@@ -93,7 +93,7 @@ async def async_setup_entry(
 class HeatPumpNumber(NumberEntity):
     """Number entity for Remko heat pump temperature input registers."""
 
-    _attr_has_entity_name = True
+    _attr_has_entity_name = False
     _attr_available = True
     _attr_mode = NumberMode.BOX
 
