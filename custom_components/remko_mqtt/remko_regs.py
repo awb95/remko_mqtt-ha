@@ -37,6 +37,7 @@ remko_reg = {
     "energy_electric": ["5105", "sensor_en", "kWh", "", "", True],
     "energy_thermal": ["5119", "sensor_en", "kWh", "", "", False],
     "buff_temp": ["5131", "sensor_temp", "ºC", "", "", False],
+    "air_temp_mod": ["5145", "sensor_temp", "ºC", "", "", False],
     "heating_actual_temp": ["5190", "sensor_temp", "ºC", "", "", True],
     "compressor_frequency": ["5205", "sensor_freq", "Hz", "", "", False],
     "power_own_use": ["5231", "sensor_el", "W", "", "", False],
@@ -55,6 +56,7 @@ remko_reg = {
 remko_reg_translation = {
     "absence_mode": ["Absence mode", "Abwesenheitssmodus"],
     "actual_temp": ["Actual temperature", "Ist-Temperatur"],
+    "air_temp_mod": ["Air temperature module", "Lufttemperatur Modul"],
     "buff_temp": ["Buffer tank temp.", "Pufferspeicher Temp."],
     "circulation_temp": ["Circulation temp.", "Zirkulation Temp."],
     "compressor_frequency": ["Compressor frequency", "Verdichterfrequenz"],
