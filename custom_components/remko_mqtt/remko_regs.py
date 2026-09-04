@@ -57,11 +57,11 @@ REMKO_REGISTERS = [
     ("dhw_heating", ["5693", "action", "", "", "", True], ALL),
     ("compressor_starts", ["5822", "sensor_counter", "", 0, 65535, False], ALL),
     ("compressor_hours", ["5824", "sensor_counter", "h", 0, "", False], ALL),
-    ("1stMixedCircuitFlowTemp": ["5124", "sensor_temp", "°C", "", "", True], ALL),
-    ("1stMixedCircuitReturnTemp": ["5036", "sensor_temp", "°C", "", "", True], ALL),
-    ("heat_generator_step": ["5008", "sensor", "", "", "", True], ALL),
-    ("sg_ready_operation_mode": ["5917", "sensor", "", "", "", True], ALL),
-    ("defrost_status": ["5626", "sensor", "", "", "", True], ALL),
+    ("1stMixedCircuitFlowTemp", ["5124", "sensor_temp", "°C", "", "", True], ALL),
+    ("1stMixedCircuitReturnTemp", ["5036", "sensor_temp", "°C", "", "", True], ALL),
+    ("heat_generator_step", ["5008", "sensor", "", "", "", True], ALL),
+    ("sg_ready_operation_mode", ["5917", "sensor", "", "", "", True], ALL),
+    ("defrost_status", ["5626", "sensor", "", "", "", True], ALL),
 ]
 
 
