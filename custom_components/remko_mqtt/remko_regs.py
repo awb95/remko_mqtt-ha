@@ -59,6 +59,9 @@ REMKO_REGISTERS = [
     ("compressor_hours", ["5824", "sensor_counter", "h", 0, "", False], ALL),
     ("1stMixedCircuitFlowTemp": ["5124", "sensor_temp", "°C", "", "", True], ALL),
     ("1stMixedCircuitReturnTemp": ["5036", "sensor_temp", "°C", "", "", True], ALL),
+    ("heat_generator_step": ["5008", "sensor", "", "", "", True], ALL),
+    ("sg_ready_operation_mode": ["5917", "sensor", "", "", "", True], ALL),
+    ("defrost_status": ["5626", "sensor", "", "", "", True], ALL),
 ]
 
 
@@ -80,6 +83,9 @@ def get_remko_regs(selected_model: str = WKF) -> dict:
 remko_reg_translation = {
     "1stMixedCircuitFlowTemp": ["1st mixed circ. flow temp.", "1. gem. HK Vorlauftemp."],
     "1stMixedCircuitReturnTemp": ["1st mixed circ. return temp.", "1. gem. HK Rücklauftemp."],
+    "heat_generator_step": ["Heat generator step", "Zusätzlicher Wärmeerzeuger Stufe"],
+    "defrost_status": ["Defrost status", "Abtaustatus"],
+    "sg_ready_operation_mode": ["SG-Ready operation mode", "SG-Ready Betriebsmodus"],
     "absence_mode": ["Absence mode", "Abwesenheitssmodus"],
     "actual_temp": ["Actual temperature", "Ist-Temperatur"],
     "air_temp_mod": ["Air temperature module", "Lufttemperatur Modul"],
